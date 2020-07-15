@@ -13,7 +13,7 @@ const router = new VueRouter({
 // 添加路由导航守卫
 router.beforeEach((to, from, next) => {
 // to:将要访问的路径
-// from:从哪个路径过来
+// from:从哪个路径y      + 【 d'r'j'p222222--'l。过来
 // next是一个函数,代表放行; next():放行   next('/login'):强制跳转到login路由
 // 当访问登陆页面,则放行
   if (to.path === '/login') return next()
