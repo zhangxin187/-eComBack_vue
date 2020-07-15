@@ -18,7 +18,8 @@
         <div class="toggleBar" @click='collapseToggle'>|||</div>
         <!-- 侧边栏菜单 -->
         <!-- 保持一个子菜单展开，unique：打开路由模式，router：导航以index作为path进行路由跳转 -->
-        <el-menu background-color="#333744" text-color="#fff" :unique-opened='true' router :collapse='collapseFlag' :collapse-transition='false'>
+        <el-menu background-color="#333744" text-color="#fff" :unique-opened='true' router
+        :collapse='collapseFlag' :collapse-transition='false' :default-active="activePath">
           <!-- 利用两层循环生成侧边菜单 -->
           <!-- 一级菜单,index的值要为string，故将number转为string -->
           <el-submenu :index="item.id+''" v-for="item in menus" :key="item.id">
@@ -30,7 +31,8 @@
               <span>{{item.authName}}</span>
             </template>
             <!-- 二级菜单 -->
-            <el-menu-item :index="'/'+subItem.path" v-for="subItem in item.children" :key="subItem.id">
+            <el-menu-item :index="'/'+subItem.path" v-for="subItem in item.children"
+            :key="subItem.id" @click="saveActivePath('/'+subItem.path)">
               <!-- 二级菜单模板，与一级菜单结构一样 -->
               <template slot="title">
                 <i class="el-icon-menu"></i>
@@ -40,7 +42,9 @@
           </el-submenu>
         </el-menu>
       </el-aside>
-      <el-main>Main</el-main>
+      <el-main>
+        <router-view></router-view>
+      </el-main>
     </el-container>
   </el-container>
 </template>
@@ -62,7 +66,9 @@ export default {
       // 控制菜单展开或隐藏，默认隐藏
       collapseFlag: false,
       // 侧边栏的宽度
-      asideWidth: '200px'
+      asideWidth: '200px',
+      // 该属性的值为菜单栏的index，添加给defalut-active属性，使菜单栏保持激活状态，高亮显示
+      activePath: ''
     }
   },
   methods: {
@@ -71,6 +77,15 @@ export default {
       sessionStorage.clear()
       // 跳转到登陆页面
       this.$router.push('/login')
+    },
+    // 获取左侧菜单数据
+    getMenus: async function () {
+    // 向接口发送axios请求，获取菜单的数据
+      var { data: res } = await this.$http.get('menus')
+      // 若请求不成功，则阻止代码向下执行
+      if (res.meta.status !== 200) return false
+      // 将获取到的数据赋值给data,完成数据的初始化
+      this.menus = res.data
     },
     collapseToggle: function () {
       // 切换菜单的显示隐藏状态
@@ -81,17 +96,20 @@ export default {
       } else {
         this.asideWidth = '200px'
       }
+    },
+    // 保持菜单栏的激活状态
+    saveActivePath (activePath) {
+      // activePath接收当前激活的菜单栏的index，
+      // 将其保存到sessionStorage当中，并在钩子函数中赋值给activePath，当页面刷新保持激活的菜单
+      sessionStorage.setItem('activePath', activePath)
+      this.activePath = activePath
     }
   },
   // 生命周期钩子函数，在vue实例创建成功后，该函数被调用
   async created () {
-  // 向接口发送axios请求，获取菜单的数据
-    var { data: res } = await this.$http.get('menus')
-    // 若请求不成功，则阻止代码向下执行
-    if (res.meta.status !== 200) return false
-    // 将获取到的数据赋值给data,完成数据的初始化
-    this.menus = res.data
-    console.log(this.menus)
+    this.getMenus()
+    // 保持菜单栏的激活状态
+    this.activePath = sessionStorage.getItem('activePath')
   }
 }
 </script>
