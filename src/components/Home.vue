@@ -107,6 +107,7 @@ export default {
   },
   // 生命周期钩子函数，在vue实例创建成功后，该函数被调用
   async created () {
+    // 获取左侧菜单
     this.getMenus()
     // 保持菜单栏的激活状态
     this.activePath = sessionStorage.getItem('activePath')
@@ -162,5 +163,8 @@ export default {
 .el-menu{
   //清除菜单默认的右边框
   border-right: none;
+}
+.el-main {
+  background-color: #EAEDF1;
 }
 </style>
