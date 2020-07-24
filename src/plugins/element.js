@@ -23,7 +23,11 @@ import {
   Tooltip,
   Pagination,
   Dialog,
-  MessageBox
+  MessageBox,
+  Tag,
+  Tree,
+  Select,
+  Option
 } from 'element-ui'
 
 // 将组件全局注册到Vue上，导入的这些组件其实是elementUI封装好的Vue组件
@@ -49,6 +53,10 @@ Vue.use(Switch)
 Vue.use(Tooltip)
 Vue.use(Pagination)
 Vue.use(Dialog)
+Vue.use(Tag)
+Vue.use(Tree)
+Vue.use(Select)
+Vue.use(Option)
 // 需要将Message添加到Vue的prototype上,这样在每个vue组件都可以使用Message组件的方法
 Vue.prototype.$message = Message
 // MessageBox有confirm、alert、prompt三个方法，对原生的弹窗进行了优化

@@ -4,6 +4,8 @@ import Login from '../components/Login.vue'
 import Home from '../components/Home.vue'
 import User from '../components/user/User.vue'
 import Welcome from '../components/Welcome.vue'
+import Rights from '../components/powers/Rights.vue'
+import Role from '../components/powers/Role.vue'
 Vue.use(VueRouter)
 
 const routes = [
@@ -15,7 +17,9 @@ const routes = [
     redirect: '/welcome',
     children: [
       { path: '/users', component: User },
-      { path: '/welcome', component: Welcome }]
+      { path: '/welcome', component: Welcome },
+      { path: '/rights', component: Rights },
+      { path: '/roles', component: Role }]
   }
 
 ]
@@ -25,10 +29,10 @@ const router = new VueRouter({
 })
 // 添加路由导航守卫
 router.beforeEach((to, from, next) => {
-// to:将要访问的路径
-// from:从哪个路径过来
-// next是一个函数,代表放行; next():放行   next('/login'):强制跳转到login路由
-// 当访问登陆页面,则放行
+  // to:将要访问的路径
+  // from:从哪个路径过来
+  // next是一个函数,代表放行; next():放行   next('/login'):强制跳转到login路由
+  // 当访问登陆页面,则放行
   if (to.path === '/login') return next()
   // 判断是否登陆,即查看sessionStorage中是否存储有token
   var token = sessionStorage.getItem('token')
