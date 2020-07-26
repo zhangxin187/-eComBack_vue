@@ -6,6 +6,11 @@ import User from '../components/user/User.vue'
 import Welcome from '../components/Welcome.vue'
 import Rights from '../components/powers/Rights.vue'
 import Role from '../components/powers/Role.vue'
+import Category from '../components/goods/Category.vue'
+// 树形表格第三方插件
+import ZkTable from 'vue-table-with-tree-grid'
+// 第三方插件也就是组件，全局注册该组件
+Vue.component('tree-table', ZkTable)
 Vue.use(VueRouter)
 
 const routes = [
@@ -19,7 +24,8 @@ const routes = [
       { path: '/users', component: User },
       { path: '/welcome', component: Welcome },
       { path: '/rights', component: Rights },
-      { path: '/roles', component: Role }]
+      { path: '/roles', component: Role },
+      { path: '/categories', component: Category }]
   }
 
 ]

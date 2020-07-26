@@ -145,7 +145,7 @@
       </el-dialog>
 
       <!-- 修改用户对话框 -->
-      <el-dialog title="提示"
+      <el-dialog title="修改用户"
                  :visible.sync="editDialogVisible"
                  width="50%"
                  @closed='editDialogClosed'>
@@ -442,12 +442,12 @@ export default {
       this.settingRoleUserInfo = info
     },
     // 获取角色列表
-    async  getRoleList () {
+    async getRoleList () {
       var { data: res } = await this.$http.get('roles')
       this.roleList = res.data
     },
     // 提交给用户分配的角色
-    async  saveSettedRole () {
+    async saveSettedRole () {
       if (this.selectedRid === '') return this.$message.error('请选择分配的角色')
       var { data: res } = await this.$http.put(`users/${this.settingRoleUserInfo.id}/role`, {
         rid: this.selectedRid
