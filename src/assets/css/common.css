@@ -27,12 +27,6 @@ img {
     height: 220px;
 }
 
-/* 调整级联选择器的下拉选择框的位置 */
-
-.el-cascader__dropdown {
-    top: 290px!important;
-}
-
 /* 将级联选择器的单选框隐藏掉，并点击文字即可选中 */
 
 .el-cascader-panel .el-radio {

@@ -7,6 +7,7 @@ import Welcome from '../components/Welcome.vue'
 import Rights from '../components/powers/Rights.vue'
 import Role from '../components/powers/Role.vue'
 import Category from '../components/goods/Category.vue'
+import Params from '../components/goods/Params.vue'
 // 树形表格第三方插件
 import ZkTable from 'vue-table-with-tree-grid'
 // 第三方插件也就是组件，全局注册该组件
@@ -25,7 +26,8 @@ const routes = [
       { path: '/welcome', component: Welcome },
       { path: '/rights', component: Rights },
       { path: '/roles', component: Role },
-      { path: '/categories', component: Category }]
+      { path: '/categories', component: Category },
+      { path: '/params', component: Params }]
   }
 
 ]
