@@ -56,7 +56,7 @@
                           ref="tagInputRef"
                           size="small"
                           @keyup.enter.native="addAttrTag(scope.row)"
-                          @blur="addAttrTag(scope.row)">
+                          @blur="addManyAttrTag(scope.row)">
                 </el-input>
                 <el-button v-else
                            class="button-new-tag"
@@ -110,7 +110,7 @@
                           ref="tagInputRef"
                           size="small"
                           @keyup.enter.native="addAttrTag(scope.row)"
-                          @blur="addAttrTag(scope.row)">
+                          @blur="addOnlyAttrTag(scope.row)">
                 </el-input>
                 <el-button v-else
                            class="button-new-tag"
@@ -337,8 +337,22 @@ export default {
       if (res.meta.status !== 200) return this.$message.error('更新参数项失败')
       this.$message.success('更新参数项成功')
     },
+
+    // 点击button,显示输入框
+    showInput (row) {
+      // 之前给每个参数数据对象中添加了控制input显示与隐藏的Visible 和 双向绑定的Vlue
+      row.inputVisible = true
+      // 在下次DOM更新循环结束后执行回调，即当input加载出来再执行回调
+      // Vue 实现响应式并不是数据发生变化之后 DOM 立即变化，而是按一定的策略进行 DOM 的更新
+      // 若不加nextTick,则让输入框获取焦点,此时输入框还未加载出来
+      this.$nextTick(() => {
+        // 输入框获取焦点
+        // this.$refs.tagInputRef.$refs.input 获取原生的表单输入框
+        this.$refs.tagInputRef.$refs.input.focus()
+      })
+    },
     // 动态添加参数标签
-    addAttrTag (row) {
+    addManyAttrTag (row) {
       // 之前给每个参数数据对象中添加了控制input显示与隐藏的Visible 和 双向绑定的Vlue
       // 故直接对row进行操作
       // 当输入的内容不为空，添加标签
@@ -353,19 +367,25 @@ export default {
       // 清空输入框绑定的值
       row.inputValue = ''
     },
-    // 点击button,显示输入框
-    showInput (row) {
-      // 之前给每个参数数据对象中添加了控制input显示与隐藏的Visible 和 双向绑定的Vlue
-      row.inputVisible = true
-      // 在下次DOM更新循环结束后执行回调，即当input加载出来再执行回调
-      // Vue 实现响应式并不是数据发生变化之后 DOM 立即变化，而是按一定的策略进行 DOM 的更新
-      // 若不加nextTick,则让输入框获取焦点,此时输入框还未加载出来
-      this.$nextTick(() => {
-        // 输入框获取焦点
-        // this.$refs.tagInputRef.$refs.input 获取原生的表单输入框
-        this.$refs.tagInputRef.$refs.input.focus()
-      })
+    addOnlyAttrTag (row) {
+      if (row.inputValue.trim().length !== 0) {
+        // 静态属性的每个属性下的属性值只能有一个,当已经有了属性值时,则不能再添加属性值标签
+        if (row.attrValsArr.length === 1) {
+          this.$message.error('静态属性只能有一个属性值')
+        } else {
+          // 当前属性下没有属性值，可以添加属性值标签
+          // 前端页面添加标签,对该行绑定数据的数组追加元素
+          row.attrValsArr.push(row.inputValue)
+          // 保存编辑的参数属性值
+          this.saveAttribute(row)
+        }
+      }
+      // 隐藏输入框
+      row.inputVisible = false
+      // 清空输入框绑定的值
+      row.inputValue = ''
     },
+
     // 展示修改参数的对话框
     showEditParamsDialog (row) {
       this.editParamsDialogVisible = true

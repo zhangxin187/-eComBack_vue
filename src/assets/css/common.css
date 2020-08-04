@@ -41,3 +41,15 @@ img {
 .el-cascader-panel .el-radio__input {
     visibility: hidden;
 }
+
+/* 解决Table组件表格边框线可能对不齐的情况 */
+
+.el-table th.gutter {
+    display: table-cell !important
+}
+
+/* 调整富文本编辑器的高度 */
+
+.ql-editor {
+    height: 200px !important;
+}
