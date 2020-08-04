@@ -36,7 +36,9 @@ import {
   Steps,
   Checkbox,
   CheckboxGroup,
-  Upload
+  Upload,
+  Timeline,
+  TimelineItem
 } from 'element-ui'
 
 // 将组件全局注册到Vue上，导入的这些组件其实是elementUI封装好的Vue组件
@@ -75,6 +77,8 @@ Vue.use(Steps)
 Vue.use(Checkbox)
 Vue.use(CheckboxGroup)
 Vue.use(Upload)
+Vue.use(Timeline)
+Vue.use(TimelineItem)
 // 需要将Message添加到Vue的prototype上,这样在每个vue组件都可以使用Message组件的方法
 Vue.prototype.$message = Message
 // MessageBox有confirm、alert、prompt三个方法，对原生的弹窗进行了优化
