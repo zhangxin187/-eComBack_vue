@@ -11,6 +11,7 @@ import Params from '../components/goods/Params.vue'
 import List from '../components/goods/List.vue'
 import Add from '../components/goods/Add.vue'
 import Order from '../components/Order.vue'
+import Report from '../components/Report.vue'
 // 树形表格第三方插件
 import ZkTable from 'vue-table-with-tree-grid'
 // 第三方插件也就是组件，全局注册该组件
@@ -33,7 +34,8 @@ const routes = [
       { path: '/params', component: Params },
       { path: '/goods', component: List },
       { path: '/goods/add', component: Add },
-      { path: '/orders', component: Order }]
+      { path: '/orders', component: Order },
+      { path: '/reports', component: Report }]
   }
 
 ]

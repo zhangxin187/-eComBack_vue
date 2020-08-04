@@ -234,7 +234,7 @@ export default {
     },
     // 展示物流信息的对话框
     async showExpressDialog () {
-      // 查询物流信息,使用后台提供的测试id
+      // 查询物流信息,使用后台提供的测试参数id
       var { data: res } = await this.$http.get('/kuaidi/1106975712662')
       if (res.meta.status !== 200) return false
       this.expressData = res.data
